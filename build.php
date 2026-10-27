@@ -68,6 +68,9 @@ $CONFIG = [
     'site_url'     => 'https://basilemalin.fr',   // à adapter au domaine acheté
     'author'       => 'Basile Malin',
     'description'  => 'Blog de Basile Malin : développement web, reconversion depuis l\'industrie, PHP, Symfony, systèmes.',
+    // Texte d'accroche affiché sur la première page, au-dessus de la liste
+    'tagline'     => "Après douze ans de terrain industriel, j'ai repris les études pour devenir développeur. " .
+                     "Ici, je raconte ce que je code, ce que j'administre et ce que je dépanne — souvent les trois à la fois.",
     'cv_url'       => 'https://bazmati.github.io/basile-malin-cv-2026/',
     'github_url'    => 'https://github.com/bazmati',
     'email'         => 'basilemalin@gmx.fr',
@@ -245,10 +248,14 @@ function site_css(): string
                  border-bottom:2px solid var(--accent); margin-bottom:2rem; }
         header h1 a { color:var(--ink); text-decoration:none; }
         header h1 a span { color:var(--accent); }
+        .logo { vertical-align:-4px; margin-right:.4rem; border-radius:6px; }
         nav a { color:var(--muted); text-decoration:none; margin-right:1rem; font-size:.95rem; }
         nav a:hover { color:var(--accent); }
         /* Lisibilité : 65-75 caractères par ligne dans la colonne principale */
         main { max-width:70ch; }
+        /* Accroche de la page d'accueil */
+        .hero-intro { font-size:1.05rem; line-height:1.8; margin:0 0 2rem; padding:1.2rem 1.5rem;
+                      border-left:3px solid var(--accent); background:#f4f6fb; border-radius:0 8px 8px 0; }
         article h2 { margin-top:2rem; }
         .meta { color:var(--muted); font-size:.9rem; }
         .tag { display:inline-block; background:#eee; border-radius:6px; padding:0 .5rem; font-size:.8rem; }
@@ -352,13 +359,13 @@ function layout(string $title, string $description, string $body, array $config,
     <link rel="alternate" type="application/rss+xml" href="{$root}feed.xml" title="{$config['site_name']}">
     <script type="application/ld+json">$jsonld_person</script>
     $crumb_script
-    <link rel="icon" href="{$root}assets/favicon.webp" type="image/webp">
+    <link rel="icon" href="{$root}assets/{$config['favicon']}" type="image/webp">
     <link rel="stylesheet" href="{$root}assets/style.css">
 </head>
 <body>
 <div class="wrap">
     <header>
-        <h1><a href="{$config['site_url']}/">Basile <span>Malin</span></a></h1>
+        <h1><a href="{$config['site_url']}/"><img class="logo" src="{$root}assets/favicon.webp" alt="Logo — Basile Malin" width="80" height="60"> Basile <span>Malin</span></a></h1>
         <nav>
             <a href="$root">Blog</a>
             <a href="$cv" rel="noopener">CV</a>
@@ -512,7 +519,7 @@ $assetMap = process_assets(__DIR__ . '/assets', "$out/assets");
 // mkdir systématique : dist/assets/ doit exister même si assets/ est vide
 if (!is_dir("$out/assets")) @mkdir("$out/assets", 0775, true);
 file_put_contents("$out/assets/style.css", site_css());
-// Favicon : favicon.jpg déposé dans assets/ (le logo "chevron-étincelle"
+// Favicon : favicon.png déposé dans assets/ (le logo "chevron-étincelle"
 // généré par IA, téléchargé depuis la conversation). Copié par process_assets.
 // Si absent, le navigateur affiche l'icône par défaut — pas de plantage.
 
@@ -540,6 +547,9 @@ foreach ($articles as &$a) {
     $a['body_html'] = rewrite_asset_urls($a['body_html'], $assetMap);
 }
 unset($a);
+
+// Favicon : process_assets la convertit en .webp — on référence le nom converti
+$CONFIG['favicon'] = $assetMap['favicon.png'] ?? 'favicon.png';
 
 // Regroupement catégories / tags : calculé UNE fois ici, utilisé par
 // l'accueil, les pages articles, les pages de liste et le sitemap.
@@ -626,10 +636,12 @@ foreach ($pages as $i => $chunk) {
             . '</nav>';
     }
 
+    $hero = $n === 1 ? '<p class="hero-intro">' . htmlspecialchars($CONFIG['tagline']) . '</p>' : '';
+
     $pageHtml = layout(
         $n === 1 ? $CONFIG['site_name'] : $CONFIG['site_name'] . ' — page ' . $n,
         $CONFIG['description'],
-        '<section class="cards">' . $render_cards($chunk, $p) . '</section>' . $nav,
+        $hero . '<section class="cards">' . $render_cards($chunk, $p) . '</section>' . $nav,
         $CONFIG,
         $CONFIG['site_url'] . '/assets/' . ($assetMap['avatar.jpg'] ?? 'avatar.jpg'),
         $p,
