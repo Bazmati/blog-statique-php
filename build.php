@@ -65,7 +65,7 @@
 
 $CONFIG = [
     'site_name'    => 'Basile Malin — Développeur',
-    'site_url'     => 'https://basilemalin.fr',   // à adapter au domaine acheté
+    'site_url'     => 'https://basile-malin.fr',   // à adapter au domaine acheté
     'author'       => 'Basile Malin',
     'description'  => 'Blog de Basile Malin : développement web, reconversion depuis l\'industrie, PHP, Symfony, systèmes.',
     // Texte d'accroche affiché sur la première page, au-dessus de la liste
