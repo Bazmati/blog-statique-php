@@ -233,7 +233,7 @@ function inline(string $s): string
 function site_css(): string
 {
     return <<<'CSS'
-        :root { --accent:#047857; --accent-dark:#065f46; --ink:#1c1e21; --bg:#fcfcfa; --muted:#565b63; }
+        :root { --accent:#1e40af; --accent-dark:#1a368f; --ink:#1c1e21; --bg:#fcfcfa; --muted:#565b63; }
         * { box-sizing:border-box; }
         html { scroll-behavior:smooth; }
         body { font:17px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--bg); margin:0;
@@ -254,7 +254,7 @@ function site_css(): string
         .tag { display:inline-block; background:#eee; border-radius:6px; padding:0 .5rem; font-size:.8rem; }
         a.tag { color:inherit; text-decoration:none; }
         a.tag:hover { background:var(--accent); color:#fff; }
-        .tag.cat { background:#e2f3ec; color:#065f46; }
+        .tag.cat { background:#e8edf8; color:#1a368f; }
         a.tag.cat:hover { background:var(--accent); }
         pre { background:#f0f2f4; padding:1rem; border-radius:8px; overflow-x:auto; font-size:.9em; }
         code { background:#f0f2f4; padding:.1rem .3rem; border-radius:4px; }
@@ -352,7 +352,7 @@ function layout(string $title, string $description, string $body, array $config,
     <link rel="alternate" type="application/rss+xml" href="{$root}feed.xml" title="{$config['site_name']}">
     <script type="application/ld+json">$jsonld_person</script>
     $crumb_script
-    <link rel="icon" href="{$root}assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="{$root}assets/favicon.webp" type="image/webp">
     <link rel="stylesheet" href="{$root}assets/style.css">
 </head>
 <body>
@@ -512,11 +512,9 @@ $assetMap = process_assets(__DIR__ . '/assets', "$out/assets");
 // mkdir systématique : dist/assets/ doit exister même si assets/ est vide
 if (!is_dir("$out/assets")) @mkdir("$out/assets", 0775, true);
 file_put_contents("$out/assets/style.css", site_css());
-file_put_contents("$out/assets/favicon.svg",
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
-    . '<rect width="32" height="32" rx="6" fill="#047857"/>'
-    . '<text x="16" y="23" font-family="system-ui,sans-serif" font-size="20" font-weight="700" '
-    . 'fill="#fff" text-anchor="middle">B</text></svg>');
+// Favicon : favicon.jpg déposé dans assets/ (le logo "chevron-étincelle"
+// généré par IA, téléchargé depuis la conversation). Copié par process_assets.
+// Si absent, le navigateur affiche l'icône par défaut — pas de plantage.
 
 
 $articles = [];
