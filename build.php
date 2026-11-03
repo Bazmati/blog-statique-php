@@ -275,7 +275,9 @@ function site_css(): string
         .cards a.card { display:flex; gap:1rem; align-items:flex-start; color:inherit; text-decoration:none;
                         border:1px solid #e2e2e2; border-radius:10px; padding:1rem; background:#fff; }
         .cards a.card:hover { border-color:var(--accent); }
-        .cards h2 { margin:.2rem 0 .3rem; font-size:1.05rem; }
+        .cards h2 { margin:0 0 .2rem; font-size:1.15rem; line-height:1.35; }
+        .card .meta { font-size:.85rem; }
+        .cards a.card p { margin:.45rem 0 0; font-size:.92rem; color:var(--muted); }
         .card img.cover { order:2; width:120px; height:90px; object-fit:cover; border-radius:8px; flex:none; }
         .card .card-body { flex:1; min-width:0; }
         article img { max-width:100%; height:auto; border-radius:8px; display:block; margin:1.2rem auto; }
@@ -611,12 +613,10 @@ $render_cards = function (array $list, string $p) {
         $cover = $a['image']
             ? '<img class="cover" src="' . $p . 'assets/' . htmlspecialchars($a['image']) . '" alt="' . htmlspecialchars($a['image_alt']) . '" loading="lazy">'
             : '';
-        $tagsHtml = implode(' ', array_map(fn($t) => '<span class="tag">' . htmlspecialchars($t) . '</span>', $a['tags']));
-        $catHtml = $a['category'] ? '<span class="tag cat">' . htmlspecialchars($a['category']) . '</span> ' : '';
         $cards .= '<a class="card" href="' . $p . 'article/' . $a['slug'] . '/">'
             . '<span class="card-body">'
-            . '<div class="meta"><time datetime="' . $a['date'] . '">' . $a['date_fr'] . '</time> · ' . $catHtml . $tagsHtml . '</div>'
             . '<h2>' . htmlspecialchars($a['title']) . '</h2>'
+            . '<div class="meta"><time datetime="' . $a['date'] . '">' . $a['date_fr'] . '</time></div>'
             . '<p>' . htmlspecialchars($a['description']) . '</p>'
             . '</span>'
             . $cover
