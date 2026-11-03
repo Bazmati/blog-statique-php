@@ -270,7 +270,7 @@ function site_css(): string
         table { border-collapse:collapse; margin:1.2rem 0; width:100%; }
         th, td { border:1px solid #ddd; padding:.4rem .6rem; text-align:left; }
         th { background:#f0f2f4; }
-        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; position: absolute; bottom: 0; width: 100%;height: 2.5rem;}
+        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; bottom: 0; width: 100%; position: sticky; height: 2.5rem;}
         /* footer {  position: absolute; bottom: 0; width: 100%;height: 2.5rem;} */
         .cards { display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem; }
         .cards a.card { display:flex; gap:1rem; align-items:flex-start; color:inherit; text-decoration:none;
@@ -292,7 +292,7 @@ function site_css(): string
         mobile. Avec min-width:0, pre { overflow-x:auto } peut s'exprimer : le code
         défile dans son bloc, jamais au-delà. */
         .layout > * { min-width:0; }
-        .sidebar { border-left:1px solid #e6e6e6; padding-left:1.5rem; font-size:.92rem; min-height: 70vh;}
+        .sidebar { border-left:1px solid #e6e6e6; padding-left:1.5rem; font-size:.92rem; }
         .sidebar h3 { font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:1.4rem 0 .5rem; }
         .sidebar ul { list-style:none; padding:0; margin:0; }
         .sidebar li { margin:.3rem 0; }
