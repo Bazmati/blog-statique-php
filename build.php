@@ -49,7 +49,7 @@
  *
  *  UTILISATION :
  *      php build.php                     (génère dist/)
- *      rsync -rav --delete dist/ user@serveur:/var/www/basile/
+ *      rsync -avz --delete ./dist/ root@192.168.1.201:/var/www/blog/
  *
  *  SORTIE GÉNÉRÉE :
  *      dist/index.html          liste des articles
@@ -263,8 +263,8 @@ function site_css(): string
         a.tag:hover { background:var(--accent); color:#fff; }
         .tag.cat { background:#e8edf8; color:#1a368f; }
         a.tag.cat:hover { background:var(--accent); }
-        pre { background:#f0f2f4; padding:1rem; border-radius:8px; overflow-x:auto; font-size:.9em; }
-        code { background:#f0f2f4; padding:.1rem .3rem; border-radius:4px; }
+        pre { background:#f0f2f4; padding:1rem; border-radius:8px; overflow-x:auto; font-size:.9em; max-width:100%; -webkit-overflow-scrolling:touch; }
+        code { background:#f0f2f4; padding:.1rem .3rem; border-radius:4px; overflow-wrap:anywhere; }
         pre code { padding:0; }
         blockquote { border-left:3px solid var(--accent); margin:1.2rem 0; padding:.2rem 0 .2rem 1rem; color:var(--muted); }
         table { border-collapse:collapse; margin:1.2rem 0; width:100%; }
@@ -282,6 +282,11 @@ function site_css(): string
         /* Réservation d'espace -> pas de saut de texte au chargement (CLS) */
         .hero { width:100%; aspect-ratio:16/9; object-fit:cover; }
         .layout { display:grid; grid-template-columns:1fr 280px; gap:2.5rem; align-items:start; }
+        /* Responsive : sans min-width:0, une colonne de grille refuse de rétrécir sous la
+        largeur de son contenu (les longues lignes de code) -> toute la page déborde sur
+        mobile. Avec min-width:0, pre { overflow-x:auto } peut s'exprimer : le code
+        défile dans son bloc, jamais au-delà. */
+        .layout > * { min-width:0; }
         .sidebar { border-left:1px solid #e6e6e6; padding-left:1.5rem; font-size:.92rem; }
         .sidebar h3 { font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:1.4rem 0 .5rem; }
         .sidebar ul { list-style:none; padding:0; margin:0; }
@@ -621,6 +626,7 @@ $render_cards = function (array $list, string $p) {
 };
 
 $pages = array_chunk($articles, 10); // 10 articles par page
+if ($pages === []) { $pages = [[]]; }
 $totalPages = count($pages);
 foreach ($pages as $i => $chunk) {
     $n = $i + 1;                 // numéro de page (1 = accueil)
