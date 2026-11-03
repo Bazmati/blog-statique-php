@@ -242,7 +242,7 @@ function site_css(): string
         body { font:17px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--bg); margin:0;
                /* Sticky footer : le contenu occupe au moins l'écran, le footer reste en bas */
                min-height:100vh; display:flex; flex-direction:column; }
-        .wrap { flex:1; width:100%; max-width:1100px; margin:0 auto; padding:1.5rem 2rem; }
+        .wrap { flex:1; width:100%; margin:0 auto; padding:1.5rem 2rem; }
         /* Header sticky : la nav reste toujours accessible, mobile inclus */
         header { position:sticky; top:0; z-index:10; background:var(--bg);
                  border-bottom:2px solid var(--accent); margin-bottom:2rem; }
@@ -252,7 +252,7 @@ function site_css(): string
         nav a { color:var(--muted); text-decoration:none; margin-right:1rem; font-size:.95rem; }
         nav a:hover { color:var(--accent); }
         /* Lisibilité : 65-75 caractères par ligne dans la colonne principale */
-        main { max-width:70ch; }
+        /* main { max-width:70ch; } */
         /* Accroche de la page d'accueil */
         .hero-intro { font-size:1.05rem; line-height:1.8; margin:0 0 2rem; padding:1.2rem 1.5rem;
                       border-left:3px solid var(--accent); background:#f4f6fb; border-radius:0 8px 8px 0; }
@@ -270,7 +270,8 @@ function site_css(): string
         table { border-collapse:collapse; margin:1.2rem 0; width:100%; }
         th, td { border:1px solid #ddd; padding:.4rem .6rem; text-align:left; }
         th { background:#f0f2f4; }
-        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; }
+        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; position: absolute; bottom: 0; width: 100%;height: 2.5rem;}
+        /* footer {  position: absolute; bottom: 0; width: 100%;height: 2.5rem;} */
         .cards { display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem; }
         .cards a.card { display:flex; gap:1rem; align-items:flex-start; color:inherit; text-decoration:none;
                         border:1px solid #e2e2e2; border-radius:10px; padding:1rem; background:#fff; }
@@ -278,7 +279,9 @@ function site_css(): string
         .cards h2 { margin:0 0 .2rem; font-size:1.15rem; line-height:1.35; }
         .card .meta { font-size:.85rem; }
         .cards a.card p { margin:.45rem 0 0; font-size:.92rem; color:var(--muted); }
-        .card img.cover { order:2; width:120px; height:90px; object-fit:cover; border-radius:8px; flex:none; }
+        /* Vignette à droite : grande, pleine hauteur de la carte */
+        .cards a.card { align-items:stretch; }
+        .card img.cover { order:2; flex:0 0 38%; width:38%; min-height:150px;object-fit:cover; border-radius:8px; }
         .card .card-body { flex:1; min-width:0; }
         article img { max-width:100%; height:auto; border-radius:8px; display:block; margin:1.2rem auto; }
         /* Réservation d'espace -> pas de saut de texte au chargement (CLS) */
@@ -289,7 +292,7 @@ function site_css(): string
         mobile. Avec min-width:0, pre { overflow-x:auto } peut s'exprimer : le code
         défile dans son bloc, jamais au-delà. */
         .layout > * { min-width:0; }
-        .sidebar { border-left:1px solid #e6e6e6; padding-left:1.5rem; font-size:.92rem; }
+        .sidebar { border-left:1px solid #e6e6e6; padding-left:1.5rem; font-size:.92rem; min-height: 70vh;}
         .sidebar h3 { font-size:.85rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:1.4rem 0 .5rem; }
         .sidebar ul { list-style:none; padding:0; margin:0; }
         .sidebar li { margin:.3rem 0; }
