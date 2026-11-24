@@ -69,8 +69,7 @@ $CONFIG = [
     'author'       => 'Basile Malin',
     'description'  => 'Blog de Basile Malin : développement web, reconversion depuis l\'industrie, PHP, Symfony, systèmes.',
     // Texte d'accroche affiché sur la première page, au-dessus de la liste
-    'tagline'     => "Après douze ans de terrain industriel, j'ai repris les études pour devenir développeur. " .
-                     "Ici, je raconte ce que je code, ce que j'administre et ce que je dépanne — souvent les trois à la fois.",
+    'tagline'     => "Après douze ans de terrain industriel, j'ai repris les études pour devenir développeur. Ici, je raconte ce que je code, ce que j'administre et ce que je dépanne — souvent les trois à la fois. Je recherche un poste de développeur PHP/Symfony en Mayenne ou Ille-et-Vilaine.",
     'cv_url'       => 'https://bazmati.github.io/basile-malin-cv-2026/',
     'github_url'    => 'https://github.com/bazmati',
     'email'         => 'basilemalin@gmx.fr',
@@ -78,6 +77,7 @@ $CONFIG = [
     'host_name'    => 'Basile Malin — auto-hébergé',
     'content_dir'  => __DIR__ . '/content',
     'output_dir'   => __DIR__ . '/dist',
+    'favicon'      => 'favicon.webp',  // dépose ton favicon.png dans assets/
 ];
 
 // Slug propre : minuscules, sans accents, espaces -> tirets.
@@ -270,7 +270,7 @@ function site_css(): string
         table { border-collapse:collapse; margin:1.2rem 0; width:100%; }
         th, td { border:1px solid #ddd; padding:.4rem .6rem; text-align:left; }
         th { background:#f0f2f4; }
-        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; bottom: 0; width: 100%; position: sticky; height: 2.5rem;}
+        footer { border-top:1px solid #ddd; margin-top:3rem; padding:1rem 0; color:var(--muted); font-size:.85rem; position: relative; bottom: -0px; width: 100%; height: 2.5rem;}
         /* footer {  position: absolute; bottom: 0; width: 100%;height: 2.5rem;} */
         .cards { display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem; }
         .cards a.card { display:flex; gap:1rem; align-items:flex-start; color:inherit; text-decoration:none;
@@ -559,7 +559,7 @@ foreach ($articles as &$a) {
 unset($a);
 
 // Favicon : process_assets la convertit en .webp — on référence le nom converti
-$CONFIG['favicon'] = $assetMap['favicon.png'] ?? 'favicon.png';
+$CONFIG['favicon'] = $assetMap['favicon.webp'] ?? 'favicon.webp';
 
 // Regroupement catégories / tags : calculé UNE fois ici, utilisé par
 // l'accueil, les pages articles, les pages de liste et le sitemap.
